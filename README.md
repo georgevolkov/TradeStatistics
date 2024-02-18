@@ -23,7 +23,7 @@ This repository contains a test task for an interview.
    ```bash
    docker network create trade_statistics_network
    ```
-   - build docker images     
+   - build docker images (if error try to update docker)   
    ```bash
    docker compose build
    ```
