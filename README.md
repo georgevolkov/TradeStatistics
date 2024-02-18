@@ -9,9 +9,16 @@ This repository contains a test task for an interview.
    Open CMD and navigate to the directory containing `TradeStatisticsAPI.sln`.
 
    Execute the following commands:
+   - create docker network 
    ```bash
    docker network create trade_statistics_network
+   ```
+   - build docker images     
+   ```bash
    docker compose build
+   ```
+   - run builded images
+   ```bash
    docker compose up -d
    ```
 
