@@ -1,7 +1,85 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>Trade Average Count Hub</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+    <style>
+        body {
+            background-color: #1E3932; /* Синезеленый фон */
+            color: white; /* Белый цвет текста */
+            font-family: Arial, sans-serif; /* Шрифт */
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .average-container {
+            text-align: center;
+        }
+        .divider {
+            height: 3px; /* Толщина черной полоски */
+            background-color: black; /* Черный цвет полоски */
+            width: 100%;
+        }
+        .average-value {
+            font-size: 72px; /* Размер шрифта для значений */
+            margin: 10px 0; /* Отступы сверху и снизу */
+        }
+    </style>
+</head>
 <body>
-<h1>
-Hello World!
-</h1>
+    <div class="container">
+        <div class="average-container">
+            <h1>Average Trades per Minute</h1>
+            <hr class="divider">
+            <p class="average-value" id="averageCount">0</p>
+        </div>
+        <div class="average-container">
+            <h1>Average Trade Sum per Minute</h1>
+            <hr class="divider">
+            <p class="average-value" id="averageSum">0</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var connectionCount = new signalR.HubConnectionBuilder()
+                .withUrl("http://localhost:8080/tradecounthub") // URL для хаба с Trade Count
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connectionCount.on("ReceiveTradeAverageCount", function (minutes) {
+                $('#averageCount').text((minutes || 0).toFixed(10)); // Ограничиваем до 4 знаков после запятой
+            });
+
+            connectionCount.start()
+                .then(function () {
+                    console.log('Connected to TradeAverageCountHub');
+                })
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+            var connectionSum = new signalR.HubConnectionBuilder()
+                .withUrl("http://localhost:8080/tradesumhub") // URL для хаба с Trade Sum
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connectionSum.on("ReceiveTradeAverageSum", function (sum) {
+                $('#averageSum').text((sum || 0).toFixed(10)); // Ограничиваем до 4 знаков после запятой
+            });
+
+            connectionSum.start()
+                .then(function () {
+                    console.log('Connected to TradeAverageSumHub');
+                })
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });
+        });
+    </script>
 </body>
 </html>
