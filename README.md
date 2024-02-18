@@ -5,10 +5,20 @@ This repository contains a test task for an interview.
 ## Installation Instructions
 
 1. **Create a network and run:**
-
-   Open CMD and navigate to the directory containing `TradeStatisticsAPI.sln`.
-
+   
+   Make sure docker and git installed on your PC
+     
+   Open CMD and navigate to the directory where you wish store the project 
    Execute the following commands:
+	
+   - clone repository 
+   ```bash
+   git clone https://github.com/georgevolkov/TradeStatistics.git
+   ```
+   - open project directory
+   ```bash
+   cd TradeStatistics
+   ```
    - create docker network 
    ```bash
    docker network create trade_statistics_network
@@ -22,12 +32,12 @@ This repository contains a test task for an interview.
    docker compose up -d
    ```
 
-Access the Application:
+2. Access the Application:
 
 Open http://localhost:8050/ in your web browser.
 
 
-notes:
+Notes:
 
 1. Create refacoting
 2. Add reconnection logic for websockets
