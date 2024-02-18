@@ -18,3 +18,12 @@ This repository contains a test task for an interview.
 Access the Application:
 
 Open http://localhost:8050/ in your web browser.
+
+
+notes:
+
+1. Create refacoting
+2. Add reconnection logic for websockets
+3. Add exception handling
+4. Add logging
+5. Create database to store data if container wiil restart to keep calculations
