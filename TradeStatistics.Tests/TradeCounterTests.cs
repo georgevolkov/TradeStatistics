@@ -1,7 +1,9 @@
 ﻿using AutoFixture;
 using Microsoft.Extensions.Caching.Memory;
+using Moq;
 using TradeStatisticsAPI.Application.Models;
 using TradeStatisticsAPI.Application.Services;
+using TradeStatisticsAPI.Infrastructure.Api;
 using Xunit;
 
 namespace TradeStatistics.Tests;
@@ -16,8 +18,9 @@ public class TradeCounterTests : TestBase
 	public void AverageCountTest(int records, int minutes)
 	{
 		// Arrange
+		var tradeReceiverMock = new Mock<ITradesReceiver>();
 		var memoryCache = new MemoryCache(new MemoryCacheOptions());
-		var tradeCounter = new TradeStoreService(memoryCache, MediatorMock.Object);
+		var tradeCounter = new TradeStoreService(tradeReceiverMock.Object, memoryCache, MediatorMock.Object);
 
 		var dateNow = DateTime.Now;
 		var startTrade =
@@ -49,8 +52,9 @@ public class TradeCounterTests : TestBase
 	public void AverageSumTest(int records, decimal forSum, int minutes)
 	{
 		// Arrange
+		var tradeReceiverMock = new Mock<ITradesReceiver>();
 		var memoryCache = new MemoryCache(new MemoryCacheOptions());
-		var tradeCounter = new TradeStoreService(memoryCache, MediatorMock.Object);
+		var tradeCounter = new TradeStoreService(tradeReceiverMock.Object, memoryCache, MediatorMock.Object);
 
 		var dateNow = DateTime.Now;
 		var startTrade =
